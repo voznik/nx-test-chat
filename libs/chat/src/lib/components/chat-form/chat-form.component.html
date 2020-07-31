@@ -1,0 +1,56 @@
+<mat-card>
+  <div layout="row" layout-align="start center">
+    <mat-form-field
+      class="push-left push-right"
+      flex
+      layout="row"
+      floatLabel="never"
+      appearance="outline"
+      hideRequiredMarker="true"
+    >
+      <textarea
+        rows="1"
+        flex
+        matInput
+        placeholder="Type your message, and hit Enter"
+        name="text"
+        #t="ngModel"
+        [(ngModel)]="text"
+        [ngModelOptions]="{ standalone: true }"
+        minlength="3"
+        (keydown.enter)="onSubmit(t)"
+      ></textarea>
+    </mat-form-field>
+    <div>
+      <button
+        mat-button
+        matTooltip="Add content"
+        matTooltipPosition="after"
+        [matMenuTriggerFor]="chatMenu"
+      >
+        🙂
+      </button>
+      <mat-menu #chatMenu="matMenu">
+        <mat-grid-list cols="2" rowHeight="2:1">
+          <mat-grid-tile
+            (click)="onSmileClick(item)"
+            *ngFor="let item of smiles"
+            >{{ item }}</mat-grid-tile
+          >
+        </mat-grid-list>
+      </mat-menu>
+    </div>
+    <div>
+      <button
+        mat-icon-button
+        matTooltip="Send"
+        matTooltipPosition="after"
+        type="submit"
+        (click)="onSubmit(t)"
+        [disabled]="t.pristine || t.invalid"
+      >
+        <mat-icon matSuffix>send</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-card>

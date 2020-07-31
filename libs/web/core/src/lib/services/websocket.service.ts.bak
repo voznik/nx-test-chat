@@ -1,0 +1,69 @@
+// tslint:disable:member-ordering unified-signatures
+/**
+ * Simple WebSocket client for Angular2+.
+ * @module ../core.module
+ */
+import { EventEmitter } from 'events';
+import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
+import { QueueingSubject } from '@test-chat/data';
+import { Observable } from 'rxjs';
+import { Logger } from './logger.service';
+import { share } from 'rxjs/operators';
+type WsResponse = any;
+
+/**
+ * Connection URL DI Token.
+ */
+export const WEBSOCKET_URL = new InjectionToken('socketUrl');
+export const TOKEN = new InjectionToken('token');
+
+@Injectable()
+export class WebsocketService<T> {
+  stream$: Observable<T>; // WsResponse
+  connection$: Observable<number>;
+  private inputStream: QueueingSubject<string>;
+  private _connectionUrl: string;
+
+  constructor(
+    @Inject(WEBSOCKET_URL) @Optional() url: string,
+    private logger: Logger
+  ) {
+    /* if (url && token) {
+      this._connectionUrl = `${url}?token=${token}`;
+    } else {
+      this.logger.error('no token');
+      return;
+    } */
+  }
+
+  public connect(safeUrl: string) {
+    if (this.stream$) {
+      return;
+    }
+
+    if (safeUrl) {
+      this._connectionUrl = safeUrl;
+    } else {
+      return;
+    }
+
+    // this method returns an object which contains two observables
+    const { messages, connectionStatus } = websocketConnect(
+      this._connectionUrl,
+      (this.inputStream = new QueueingSubject<string>())
+    );
+    // Using share() causes a single websocket to be created when the first
+    // observer subscribes. This socket is shared with subsequent observers
+    // and closed when the observer count falls to zero.
+    this.stream$ = messages.map((message) => JSON.parse(message)).pipe(share());
+    this.connection$ = connectionStatus.pipe(share());
+  }
+
+  public send(message: string): void {
+    // If the websocket is not connected then the QueueingSubject will ensure
+    // that messages are queued and delivered when the websocket reconnects.
+    // A regular Subject can be used to discard messages sent when the websocket
+    // is disconnected.
+    this.inputStream.next(JSON.stringify(message));
+  }
+}

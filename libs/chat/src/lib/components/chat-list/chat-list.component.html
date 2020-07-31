@@ -1,0 +1,35 @@
+<div flex class="mat-content">
+  <!-- [mediaClasses]="['push-sm']" tdMediaToggle="gt-xs" -->
+  <mat-card>
+    <mat-list>
+      <mat-list-item
+        *ngFor="let item of messages; let i = index; let last = last"
+        class="pad-top pad-bottom"
+        [class.border-bottom]="!last"
+      >
+        <img
+          matListAvatar
+          src="https://api.adorable.io/avatars/285/{{
+            item.user.id || 0
+          }}@adorable.io.png"
+        />
+        <h3 matLine class="cursor-pointer tc-grey-700">
+          {{ item.user.name || 'Firstname Lastname' }}
+          <span class="tc-grey-500 md-caption">{{
+            item.date | date: 'shortTime'
+          }}</span>
+        </h3>
+        <div matLine>
+          <div class="text-wrap">
+            {{ item.message }}
+          </div>
+        </div>
+      </mat-list-item>
+      <mat-list-item *ngIf="!messages || !messages.length">
+        <div class="text-wrap">
+          There's no messaged in this chat room
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+</div>

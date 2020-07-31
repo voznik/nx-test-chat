@@ -1,0 +1,16 @@
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav opened mode="side" position="end" class="chat-sidenav">
+    <chat-users
+      [currentUser]="currentUser"
+      [users]="users$ | async"
+      (userClicked)="userNameClicked($event)"
+    ></chat-users>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="chat-main" layout="column" layout-fill>
+      <chat-list [messages]="messages$ | async"></chat-list>
+      <!--  -->
+      <chat-form [text]="messageInput" (send)="sendMessage($event)"></chat-form>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

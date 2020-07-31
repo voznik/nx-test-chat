@@ -1,0 +1,27 @@
+<mat-list dense>
+  <ng-container *ngFor="let user of users">
+    <a
+      mat-list-item
+      (dblclick)="onUserClick($event, user)"
+      *ngIf="currentUser?.name !== user.name"
+    >
+      <mat-icon color="accent" matListIcon>lens</mat-icon>
+      <span layout="row" layout-align="start center">
+        <img
+          class="size-16 push-right-sm"
+          src="https://api.adorable.io/avatars/285/{{
+            user.id || 0
+          }}@adorable.io.png"
+        />
+        {{ user.name }}</span
+      >
+    </a>
+  </ng-container>
+  <a
+    mat-list-item
+    *ngIf="
+      !users || (users.length === 1 && currentUser?.name === users[0].name)
+    "
+    >There'se no one exept you in this chat room</a
+  >
+</mat-list>

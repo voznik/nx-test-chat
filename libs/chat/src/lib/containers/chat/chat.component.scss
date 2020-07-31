@@ -1,0 +1,14 @@
+.chat-main {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  chat-list {
+    flex-grow: 1;
+  }
+
+  chat-form {
+    flex-shrink: 0;
+  }
+}

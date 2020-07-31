@@ -1,0 +1,46 @@
+<!-- <div style="text-align: center;">
+  <h1>Welcome to simple-chat!</h1>
+  <img
+    width="450"
+    src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png"
+  />
+</div>
+<div>Message: {{ hello$ | async | json }}</div>
+ -->
+
+<td-layout #layout>
+  <td-navigation-drawer
+    sidenavTitle="Test Chat"
+    [logo]="'assets:teradata'"
+    navigationRoute="/"
+    flex
+    color="none"
+  >
+  </td-navigation-drawer>
+  <div td-sidenav-content class="td-layout-footer pad">
+    <span class="mat-caption tc-grey-500"
+      >&copy; voznik. All Rights Reserved</span
+    >
+  </div>
+  <td-layout-nav>
+    <div
+      td-toolbar-content
+      layout="row"
+      layout-align="space-between center"
+      flex
+    >
+      <button mat-icon-button td-menu-button tdLayoutToggle hide-gt-sm>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-icon
+        hide-xs
+        [routerLink]="['/']"
+        class="mat-icon-logo cursor-pointer"
+        svgIcon="assets:teradata"
+      ></mat-icon>
+      <!-- <td-toolbar flex layout="row"></td-toolbar> -->
+      <button mat-icon-button matTooltip="Conversation settings" [style.margin]="'0 -5px'"><mat-icon>settings</mat-icon></button>
+    </div>
+    <router-outlet></router-outlet>
+  </td-layout-nav>
+</td-layout>
