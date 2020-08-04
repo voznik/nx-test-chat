@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { Message, User } from '@test-chat/data';
-import { DataService } from '@test-chat/web/core';
-import { Observable, of } from 'rxjs';
+import { merge, Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 //
 import { ChatDataService, ChatSessionService } from '../../services';
 
 @Component({
-  // selector: 'chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -14,14 +14,27 @@ import { ChatDataService, ChatSessionService } from '../../services';
 export class ChatComponent implements OnInit {
   currentUser: User = null;
   currentUserName = '';
+  messageInput = '';
+  connection$ = this.chatService.connection$;
   users$: Observable<User[]> = this.chatService.chatUsers$;
   messages$: Observable<Message[]> = this.chatService.chatMessages$;
-  connection$ = this.chatService.connection$;
-  messageInput = '';
+  // Observable of local messages
+  localMessages$: Observable<
+    Message[]
+  > = this.sessionService.storageEvents$.pipe(
+    filter((event: StorageEvent) => event.key === 'messages'),
+    map((event) => JSON.parse(event.newValue) as Message[])
+  );
+
+  __messages$: Observable<Message[]> = merge(
+    this.chatService.chatMessages$,
+    this.localMessages$
+  );
 
   constructor(
     private chatService: ChatDataService,
-    private sessionService: ChatSessionService
+    private sessionService: ChatSessionService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -46,5 +59,11 @@ export class ChatComponent implements OnInit {
       user: this.currentUser,
     });
     this.messageInput = null;
+  }
+
+  exitChat() {
+    this.chatService.disconnectSocket();
+    this.router.navigate(['/chat/enter']);
+    window.location.reload(); // soeey for this shit
   }
 }

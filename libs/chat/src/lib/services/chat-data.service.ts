@@ -16,7 +16,7 @@ export class ChatDataService {
     map((e) => e['data']),
     tap({
       complete: () => {
-        this.sessionService.exitChat();
+        // this.sessionService.exitChat(); // TODO: when to exit chat
       },
     })
   );

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '@test-chat/data';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, from, fromEvent } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 const KEY = 'chatUser';
 
@@ -8,6 +9,10 @@ const KEY = 'chatUser';
 export class ChatSessionService {
   private currentUser = new BehaviorSubject<Partial<User>>(null);
   currentUser$ = this.currentUser.asObservable();
+  // get stream from sessionStorage events, to sync between tabs
+  storageEvents$ = fromEvent<StorageEvent>(window, 'storage').pipe(
+    filter((event) => event.storageArea === sessionStorage)
+  );
 
   constructor() {
     const existing = JSON.parse(window.sessionStorage.getItem(KEY));

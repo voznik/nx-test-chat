@@ -9,7 +9,7 @@ import { ChatSessionService } from '../../services';
   styleUrls: ['./chat-login.component.scss'],
 })
 export class ChatLoginComponent implements OnInit {
-  username = '';
+  username = null;
   constructor(
     private sessionService: ChatSessionService,
     private router: Router
@@ -19,7 +19,7 @@ export class ChatLoginComponent implements OnInit {
 
   sendUserInfo(tm: NgModel) {
     if (tm.valid && tm.value.length && tm.value.length >= 3) {
-      this.sessionService.enterChat(tm.value.trim);
+      this.sessionService.enterChat(tm.value.trim());
       tm.reset();
       this.router.navigate(['/chat/room']);
     }

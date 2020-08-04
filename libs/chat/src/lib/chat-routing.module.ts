@@ -19,6 +19,7 @@ const routes: Route[] = [
   {
     path: '',
     redirectTo: 'room',
+    pathMatch: 'full',
   },
 ];
 

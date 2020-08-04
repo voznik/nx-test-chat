@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1596548596945,
+  "timestamp": 1596551431147,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -11,13 +11,13 @@
         "ignoreVary": true
       },
       "urls": [
-        "/4.1f6d81b3d41487f94844.js",
+        "/4.a808f6c3e430b8ce73a7.js",
         "/favicon.ico",
         "/index.html",
-        "/main.3b7176375c7a3ddddc20.js",
+        "/main.bdc1f420200cba949709.js",
         "/manifest.webmanifest",
         "/polyfills.a1199da94ed4671acb7b.js",
-        "/runtime.7e684646ba9c57cc396b.js",
+        "/runtime.214c1b4488e1f0aebd36.js",
         "/styles.288d3f495f37058208bc.css"
       ],
       "patterns": []
@@ -47,7 +47,7 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/4.1f6d81b3d41487f94844.js": "02d28b13e002c381ab473bc23a05aab9de26459f",
+    "/4.a808f6c3e430b8ce73a7.js": "614ced292c187105c6b81f1a469e05c8ceea73de",
     "/MaterialIcons-Regular-v48.12a47ed5fd5585f0f422.woff2": "308ee3580a4a34bd230025d460762d53b5344efc",
     "/assets/icons/angular.svg": "e43a6aa17a128037b8562069b398163e13e2930c",
     "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
@@ -60,11 +60,11 @@
     "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "/assets/icons/teradata.svg": "4a32ff656831769936048922a6ab031c0ab73cab",
     "/favicon.ico": "4e23d0f9b6ddaf3c9ddef90dbaed2342941297b5",
-    "/index.html": "043e8330e9d0861a98429faa689c267e84829053",
-    "/main.3b7176375c7a3ddddc20.js": "486532332f60d21f937009ab5c1a3e4322befee9",
+    "/index.html": "f29b5602ed25723e8c4236fc46bbf411eaf88328",
+    "/main.bdc1f420200cba949709.js": "2a48223a6c5f55a1583945701492fb99efbd46f1",
     "/manifest.webmanifest": "fd4842e094f4e78039f9aa61e8806c0a3fc5d43c",
     "/polyfills.a1199da94ed4671acb7b.js": "e22424fcafa710e96da276ea0421ed5dc7ac2ebd",
-    "/runtime.7e684646ba9c57cc396b.js": "72d45da4d43dffe352c3744d140e043358d81ecf",
+    "/runtime.214c1b4488e1f0aebd36.js": "c37475eb78d69c90efb142289d4aa86460e9a64c",
     "/styles.288d3f495f37058208bc.css": "0ce89d7f7e10b175c32d9480d0657f01e5306a6b"
   },
   "navigationUrls": [
