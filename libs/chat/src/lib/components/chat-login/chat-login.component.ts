@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatSessionService } from '../../services';
+import { NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ChatSessionService } from '../../services';
 
 @Component({
   selector: 'test-chat-chat-login',
@@ -16,9 +17,11 @@ export class ChatLoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  sendUserInfo() {
-    this.sessionService.enterChat(this.username);
-    this.username = '';
-    this.router.navigate(['/chat/room']);
+  sendUserInfo(tm: NgModel) {
+    if (tm.valid && tm.value.length && tm.value.length >= 3) {
+      this.sessionService.enterChat(tm.value.trim);
+      tm.reset();
+      this.router.navigate(['/chat/room']);
+    }
   }
 }
