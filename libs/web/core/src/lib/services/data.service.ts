@@ -15,7 +15,7 @@ import {
 } from 'rxjs/webSocket';
 import { environment } from '../environments/environment';
 //
-export const WS_ENDPOINT = environment.wsEndpoint;
+export const WS_PORT = environment.wsPort;
 export const RECONNECT_INTERVAL = environment.reconnectInterval;
 export const RECONNECT_ATTEMPTS = environment.reconnectAttempts;
 
@@ -23,7 +23,6 @@ export const RECONNECT_ATTEMPTS = environment.reconnectAttempts;
   providedIn: 'root',
 })
 export class DataService {
-  private url = WS_ENDPOINT;
   // private inputStream: QueueingSubject<string>;
   private socket: WebSocketSubject<any>;
   private connection = new Subject();
@@ -82,7 +81,7 @@ export class DataService {
   private getNewWebSocket(options?: any): WebSocketSubject<any> {
     // Support TLS-specific URLs, when appropriate.
     const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-    let url = protocol + window.location.host;
+    let url = protocol + window.location.hostname + ':' + WS_PORT;
     if (options.queryParams) url = `${url}?${options.queryParams}`;
     const wsSubjectConfig: WebSocketSubjectConfig<any> = {
       url,
