@@ -80,9 +80,10 @@ export class DataService {
    * Return a custom WebSocket subject which reconnects after failure
    */
   private getNewWebSocket(options?: any): WebSocketSubject<any> {
-    const url = options.queryParams
-      ? `${WS_ENDPOINT}?${options.queryParams}`
-      : WS_ENDPOINT;
+    // Support TLS-specific URLs, when appropriate.
+    const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+    let url = protocol + window.location.host;
+    if (options.queryParams) url = `${url}?${options.queryParams}`;
     const wsSubjectConfig: WebSocketSubjectConfig<any> = {
       url,
       openObserver: {
