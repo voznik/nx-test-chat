@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Message, User } from '@test-chat/data';
 import { DataService } from '@test-chat/web/core';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { ChatSessionService } from './chat-session.service';
 
 @Injectable()
@@ -13,7 +13,12 @@ export class ChatDataService {
   );
   chatUsers$ = this.dataService.stream$.pipe(
     filter((e: any) => e.event === 'users'),
-    map((e) => e['data'])
+    map((e) => e['data']),
+    tap({
+      complete: () => {
+        this.sessionService.exitChat();
+      },
+    })
   );
   connection$ = this.dataService.connection$;
 
@@ -36,6 +41,7 @@ export class ChatDataService {
 
   disconnectSocket() {
     this.dataService.disconnect();
+    this.sessionService.exitChat();
   }
 
   sendEvent(event: string) {

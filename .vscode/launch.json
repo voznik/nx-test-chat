@@ -12,16 +12,10 @@
         "${workspaceFolder}/node_modules/**/*.js",
         "<node_internals>/**"
       ],
-      "runtimeArgs": [
-        "--nolazy",
-        "-r",
-        "ts-node/register"
-      ],
+      "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
       "program": "${workspaceFolder}/apps/api/src/main.ts",
       "preLaunchTask": "tsc: watch - apps/api/tsconfig.app.json",
-      "outFiles": [
-        "${workspaceFolder}/dist/**/*.js"
-      ]
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
     },
     {
       "type": "node",

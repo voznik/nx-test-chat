@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject, BehaviorSubject } from 'rxjs';
 import { User } from '@test-chat/data';
+import { BehaviorSubject } from 'rxjs';
 
 const KEY = 'chatUser';
 

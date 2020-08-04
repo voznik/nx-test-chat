@@ -1,16 +1,17 @@
+import { InMemoryDBModule } from '@nestjs-addons/in-memory-db';
 import { Module } from '@nestjs/common';
-import { SessionModule } from 'nestjs-session';
-
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import { AppController } from './app.controller';
+import { LoggerModule } from './app.logger';
 import { AppService } from './app.service';
 import { ChatModule } from './chat/chat.module';
-import { InMemoryDBModule } from '@nestjs-addons/in-memory-db';
-import { AppLogger, LoggerModule } from './app.logger';
 
 @Module({
   imports: [
-    SessionModule.forRoot({
-      session: { secret: 'qwerty' },
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'web'),
+      exclude: ['/api*'],
     }),
     InMemoryDBModule.forRoot(),
     LoggerModule,
