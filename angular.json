@@ -129,8 +129,8 @@
               "inspect": false,
               "fileReplacements": [
                 {
-                  "replace": "apps/api/src/environments/environment.ts",
-                  "with": "apps/api/src/environments/environment.prod.ts"
+                  "replace": "libs/web/core/src/lib/environments/environment.ts",
+                  "with": "libs/web/core/src/lib/environments/environment.prod.ts"
                 }
               ]
             }

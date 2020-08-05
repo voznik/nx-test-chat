@@ -17,6 +17,7 @@ import { ChatUsersService } from './chat-users.service';
 import { ChatAuthGuard } from './chat.guard';
 import { ChatService } from './chat.service';
 import { environment } from '@test-chat/env/environment';
+// const defaultPort = isSecure ? 443 : 80;
 
 enum WS_STATE {
   CONNECTING_STATE = 0,

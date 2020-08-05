@@ -620,6 +620,7 @@ var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 
 
 
+// const defaultPort = isSecure ? 443 : 80;
 var WS_STATE;
 (function (WS_STATE) {
     WS_STATE[WS_STATE["CONNECTING_STATE"] = 0] = "CONNECTING_STATE";
@@ -785,24 +786,13 @@ module.exports = require("rxjs");
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
 const environment = {
-    production: false,
-    wsPort: 8081,
-    wsEndpoint: 'ws://localhost:8081',
+    production: true,
+    wsPort: 80,
+    wsEndpoint: 'ws://nx-test-chat.herokuapp.com:8081',
     reconnectInterval: 2000,
     reconnectAttempts: 3,
 };
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
 
 /***/ }),
