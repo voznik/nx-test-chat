@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 25);
+/******/ 	return __webpack_require__(__webpack_require__.s = 26);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -175,6 +175,10 @@ let ChatUsersService = class ChatUsersService extends _nestjs_addons_in_memory_d
         }
         const user = { id: ++this.count, name: userName };
         return this.create(user);
+    }
+    removeUser(userName) {
+        const existing = this.findByName(userName);
+        return this.delete(existing.id);
     }
     findByName(userName) {
         return this.query((record) => record.name === userName)[0] || null;
@@ -604,7 +608,9 @@ ChatUsersController = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /* harmony import */ var _chat_users_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5);
 /* harmony import */ var _chat_guard__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7);
 /* harmony import */ var _chat_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(8);
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+/* harmony import */ var _test_chat_env_environment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(25);
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+
 
 
 
@@ -647,11 +653,9 @@ let ChatGateway = class ChatGateway {
     handleDisconnect(client) {
         // A client has disconnected
         this.logger.log('connection closed');
-        // TODO: should we delete user completely
-        // this.usersService.delete(0);
-        // const event = this.prepareEvent('users', this.usersService.getAll());
         // Notify connected clients of current users
-        // client.send(event);
+        const event = this.prepareEvent('users', this.usersService.getAll());
+        this.broadcast(event, client);
     }
     onChatEvent(message) {
         this.logger.log('onChatEvent');
@@ -679,6 +683,13 @@ let ChatGateway = class ChatGateway {
     onNewUserEvent(client, userName) {
         this.logger.log('newUser');
         this.usersService.addUser(userName);
+        const data = this.usersService.getAll();
+        const event = this.prepareEvent('users', data);
+        this.broadcast(event, client);
+    }
+    onRemoveUserEvent(client, userName) {
+        this.logger.log('removeUser');
+        this.usersService.removeUser(userName);
         const data = this.usersService.getAll();
         const event = this.prepareEvent('users', data);
         this.broadcast(event, client);
@@ -747,9 +758,17 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_h = typeof WebSocket !== "undefined" && WebSocket) === "function" ? _h : Object, String]),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", void 0)
 ], ChatGateway.prototype, "onNewUserEvent", null);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_2__["SubscribeMessage"])('removeUser'),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_2__["ConnectedSocket"])()),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_2__["MessageBody"])()),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_j = typeof WebSocket !== "undefined" && WebSocket) === "function" ? _j : Object, String]),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", void 0)
+], ChatGateway.prototype, "onRemoveUserEvent", null);
 ChatGateway = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_2__["WebSocketGateway"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_j = typeof _app_logger__WEBPACK_IMPORTED_MODULE_5__[/* AppLogger */ "a"] !== "undefined" && _app_logger__WEBPACK_IMPORTED_MODULE_5__[/* AppLogger */ "a"]) === "function" ? _j : Object, typeof (_k = typeof _chat_service__WEBPACK_IMPORTED_MODULE_8__[/* ChatService */ "a"] !== "undefined" && _chat_service__WEBPACK_IMPORTED_MODULE_8__[/* ChatService */ "a"]) === "function" ? _k : Object, typeof (_l = typeof _chat_users_service__WEBPACK_IMPORTED_MODULE_6__[/* ChatUsersService */ "a"] !== "undefined" && _chat_users_service__WEBPACK_IMPORTED_MODULE_6__[/* ChatUsersService */ "a"]) === "function" ? _l : Object])
+    Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_2__["WebSocketGateway"])(_test_chat_env_environment__WEBPACK_IMPORTED_MODULE_9__[/* environment */ "a"].wsPort),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_k = typeof _app_logger__WEBPACK_IMPORTED_MODULE_5__[/* AppLogger */ "a"] !== "undefined" && _app_logger__WEBPACK_IMPORTED_MODULE_5__[/* AppLogger */ "a"]) === "function" ? _k : Object, typeof (_l = typeof _chat_service__WEBPACK_IMPORTED_MODULE_8__[/* ChatService */ "a"] !== "undefined" && _chat_service__WEBPACK_IMPORTED_MODULE_8__[/* ChatService */ "a"]) === "function" ? _l : Object, typeof (_m = typeof _chat_users_service__WEBPACK_IMPORTED_MODULE_6__[/* ChatUsersService */ "a"] !== "undefined" && _chat_users_service__WEBPACK_IMPORTED_MODULE_6__[/* ChatUsersService */ "a"]) === "function" ? _m : Object])
 ], ChatGateway);
 
 
@@ -762,13 +781,39 @@ module.exports = require("rxjs");
 
 /***/ }),
 /* 25 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = __webpack_require__(26);
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
+const environment = {
+    production: false,
+    wsPort: 8081,
+    wsEndpoint: 'ws://localhost:8081',
+    reconnectInterval: 2000,
+    reconnectAttempts: 3,
+};
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
 
 /***/ }),
 /* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(27);
+
+
+/***/ }),
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

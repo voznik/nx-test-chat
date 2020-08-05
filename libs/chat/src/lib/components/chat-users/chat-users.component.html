@@ -17,11 +17,12 @@
       >
     </a>
   </ng-container>
-  <a
-    mat-list-item
-    *ngIf="
-      !users || (users.length === 1 && currentUser?.name === users[0].name)
-    "
-    >There'se no one exept you in this chat room</a
-  >
+  <!-- <a mat-list-item *ngIf=" !users || (users.length === 1 && currentUser?.name === users[0].name) " >There'se no one exept you in this chat room</a > -->
 </mat-list>
+<td-message
+  *ngIf="!users || (users.length === 1 && currentUser?.name === users[0].name)"
+  label=""
+  sublabel="There'se no one exept you in this chat room"
+  color="primary"
+  icon="info"
+></td-message>

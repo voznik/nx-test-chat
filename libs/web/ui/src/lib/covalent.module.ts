@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
-import { CovalentLayoutModule } from '@covalent/core/layout';
 import { CovalentDialogsModule } from '@covalent/core/dialogs';
 import { CovalentExpansionPanelModule } from '@covalent/core/expansion-panel';
-import { CovalentNotificationsModule } from '@covalent/core/notifications';
+import { CovalentLayoutModule } from '@covalent/core/layout';
 import { CovalentMenuModule } from '@covalent/core/menu';
+import { CovalentMessageModule } from '@covalent/core/message';
+import { CovalentNotificationsModule } from '@covalent/core/notifications';
 
 @NgModule({
   exports: [
-    CovalentLayoutModule,
     CovalentDialogsModule,
     CovalentExpansionPanelModule,
-    CovalentNotificationsModule,
+    CovalentLayoutModule,
     CovalentMenuModule,
+    CovalentMessageModule,
+    CovalentNotificationsModule,
   ],
 })
 export class CovalentModule {}

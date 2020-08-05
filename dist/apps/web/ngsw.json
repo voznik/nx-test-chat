@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1596607108887,
+  "timestamp": 1596613995317,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -11,13 +11,13 @@
         "ignoreVary": true
       },
       "urls": [
-        "/4.a808f6c3e430b8ce73a7.js",
+        "/4.4eb984f03d8d4d67a82d.js",
         "/favicon.ico",
         "/index.html",
-        "/main.c848098201e162601b08.js",
+        "/main.0982a7ee742b942f235a.js",
         "/manifest.webmanifest",
         "/polyfills.a1199da94ed4671acb7b.js",
-        "/runtime.214c1b4488e1f0aebd36.js",
+        "/runtime.c8fafb4d6f82748698c4.js",
         "/styles.288d3f495f37058208bc.css"
       ],
       "patterns": []
@@ -42,12 +42,30 @@
         "/assets/icons/icon-96x96.png",
         "/assets/icons/teradata.svg"
       ],
-      "patterns": []
+      "patterns": [
+        "https:\\/\\/fonts\\.googleapis\\.com\\/.*",
+        "https:\\/\\/fonts\\.gstatic\\.com\\/s\\/.*",
+        "https:\\/\\/api\\.adorable\\.io\\/.*"
+      ]
     }
   ],
-  "dataGroups": [],
+  "dataGroups": [
+    {
+      "name": "api.adorable.io",
+      "patterns": [
+        "https:\\/\\/api\\.adorable\\.io\\/.*"
+      ],
+      "strategy": "freshness",
+      "maxSize": 3,
+      "maxAge": 604800000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    }
+  ],
   "hashTable": {
-    "/4.a808f6c3e430b8ce73a7.js": "614ced292c187105c6b81f1a469e05c8ceea73de",
+    "/4.4eb984f03d8d4d67a82d.js": "eb2f0dd640e1b7510dff8fa3c3ff6aa12afd2ab5",
     "/MaterialIcons-Regular-v48.12a47ed5fd5585f0f422.woff2": "308ee3580a4a34bd230025d460762d53b5344efc",
     "/assets/icons/angular.svg": "e43a6aa17a128037b8562069b398163e13e2930c",
     "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
@@ -60,11 +78,11 @@
     "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "/assets/icons/teradata.svg": "4a32ff656831769936048922a6ab031c0ab73cab",
     "/favicon.ico": "4e23d0f9b6ddaf3c9ddef90dbaed2342941297b5",
-    "/index.html": "9d1ee6e86644fdaa2d8542145d915f5e0a244d45",
-    "/main.c848098201e162601b08.js": "e8345b0fae1e14a3b1e1aab34c62601a4304af5b",
+    "/index.html": "fd135f3603294c732d90bb5626cbe9b8f46aa519",
+    "/main.0982a7ee742b942f235a.js": "3868ea85344ea8008a8a477592b604eea4d2a670",
     "/manifest.webmanifest": "fd4842e094f4e78039f9aa61e8806c0a3fc5d43c",
     "/polyfills.a1199da94ed4671acb7b.js": "e22424fcafa710e96da276ea0421ed5dc7ac2ebd",
-    "/runtime.214c1b4488e1f0aebd36.js": "c37475eb78d69c90efb142289d4aa86460e9a64c",
+    "/runtime.c8fafb4d6f82748698c4.js": "2f967e4b8abab424d4e875b02031f7ccd6c9bc28",
     "/styles.288d3f495f37058208bc.css": "0ce89d7f7e10b175c32d9480d0657f01e5306a6b"
   },
   "navigationUrls": [

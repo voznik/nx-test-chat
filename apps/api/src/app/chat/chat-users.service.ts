@@ -26,6 +26,11 @@ export class ChatUsersService extends InMemoryDBService<User> {
     return this.create(user);
   }
 
+  removeUser(userName: string): void {
+    const existing = this.findByName(userName);
+    return this.delete(existing.id);
+  }
+
   findByName(userName: string) {
     return this.query((record) => record.name === userName)[0] || null;
   }

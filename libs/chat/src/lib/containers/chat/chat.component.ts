@@ -1,17 +1,20 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Message, User } from '@test-chat/data';
-import { merge, Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { merge, Observable, Subject } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
 //
 import { ChatDataService, ChatSessionService } from '../../services';
+
+const DEFAULT_DURATION = 1000;
 
 @Component({
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   currentUser: User = null;
   currentUserName = '';
   messageInput = '';
@@ -31,19 +34,34 @@ export class ChatComponent implements OnInit {
     this.localMessages$
   );
 
+  private destroy$ = new Subject();
+
   constructor(
     private chatService: ChatDataService,
     private sessionService: ChatSessionService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.sessionService.currentUser$.subscribe(
-      (user) => (this.currentUser = user as User)
-    );
+    this.sessionService.currentUser$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((user) => (this.currentUser = user as User));
+    this.connection$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((connected) =>
+        this.openSnackBar(
+          connected ? 'Socket connected' : 'Socket disconnected'
+        )
+      );
     this.chatService.connectSocket();
     this.chatService.sendEvent('chat');
     this.chatService.sendEvent('users');
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   userNameClicked(user: User) {
@@ -64,6 +82,12 @@ export class ChatComponent implements OnInit {
   exitChat() {
     this.chatService.disconnectSocket();
     this.router.navigate(['/chat/enter']);
-    window.location.reload(); // soeey for this shit
+    // window.location.reload(); // soeey for this shit
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, 'OK', {
+      duration: DEFAULT_DURATION,
+    });
   }
 }

@@ -16,6 +16,7 @@ import { AppLogger } from '../app.logger';
 import { ChatUsersService } from './chat-users.service';
 import { ChatAuthGuard } from './chat.guard';
 import { ChatService } from './chat.service';
+import { environment } from '@test-chat/env/environment';
 
 enum WS_STATE {
   CONNECTING_STATE = 0,
@@ -24,7 +25,7 @@ enum WS_STATE {
   CLOSED_STATE = 3,
 }
 
-@WebSocketGateway()
+@WebSocketGateway(environment.wsPort)
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
@@ -57,11 +58,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   handleDisconnect(client: any) {
     // A client has disconnected
     this.logger.log('connection closed');
-    // TODO: should we delete user completely
-    // this.usersService.delete(0);
-    // const event = this.prepareEvent('users', this.usersService.getAll());
     // Notify connected clients of current users
-    // client.send(event);
+    const event = this.prepareEvent('users', this.usersService.getAll());
+    this.broadcast(event, client);
   }
 
   @UseGuards(ChatAuthGuard)
@@ -104,6 +103,18 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   ): void {
     this.logger.log('newUser');
     this.usersService.addUser(userName);
+    const data = this.usersService.getAll();
+    const event = this.prepareEvent('users', data);
+    this.broadcast(event, client);
+  }
+
+  @SubscribeMessage('removeUser')
+  onRemoveUserEvent(
+    @ConnectedSocket() client: WebSocket,
+    @MessageBody() userName: string
+  ): void {
+    this.logger.log('removeUser');
+    this.usersService.removeUser(userName);
     const data = this.usersService.getAll();
     const event = this.prepareEvent('users', data);
     this.broadcast(event, client);

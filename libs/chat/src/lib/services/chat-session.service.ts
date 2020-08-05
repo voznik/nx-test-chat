@@ -33,7 +33,7 @@ export class ChatSessionService {
 
   exitChat() {
     this.currentUser.next(null);
-    this.currentUser.complete();
+    // this.currentUser.complete();
     window.sessionStorage.removeItem(KEY);
   }
 }

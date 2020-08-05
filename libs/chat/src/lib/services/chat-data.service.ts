@@ -13,12 +13,7 @@ export class ChatDataService {
   );
   chatUsers$ = this.dataService.stream$.pipe(
     filter((e: any) => e.event === 'users'),
-    map((e) => e['data']),
-    tap({
-      complete: () => {
-        // this.sessionService.exitChat(); // TODO: when to exit chat
-      },
-    })
+    map((e) => e['data'])
   );
   connection$ = this.dataService.connection$;
 
@@ -40,8 +35,10 @@ export class ChatDataService {
   }
 
   disconnectSocket() {
-    this.dataService.disconnect();
+    const userName = this.sessionService.getCurrentUserName();
+    this.dataService.sendMessage('removeUser', userName);
     this.sessionService.exitChat();
+    this.dataService.disconnect();
   }
 
   sendEvent(event: string) {
