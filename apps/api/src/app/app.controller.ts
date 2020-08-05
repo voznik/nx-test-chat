@@ -7,7 +7,6 @@ export class AppController {
 
   @Get()
   root(@Session() session: { views?: number }) {
-    session.views = (session.views || 0) + 1;
     return {
       session,
       message: this.appService.root(),

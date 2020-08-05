@@ -24,10 +24,6 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
   app.useWebSocketAdapter(new WsAdapter(app));
   // app.useGlobalGuards(new ChatAuthGuard(app.get(AppLogger)));
-  const microservice = app.connectMicroservice({
-    transport: Transport.TCP,
-  });
-  await app.startAllMicroservicesAsync();
   const port = process.env.PORT || 3333;
   await app.listen(port, () => {
     Logger.log('Listening at http://localhost:' + port + '/' + globalPrefix);

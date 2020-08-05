@@ -106,7 +106,13 @@
       "sourceRoot": "apps/api/src",
       "projectType": "application",
       "prefix": "api",
-      "schematics": {},
+      "schematics": {
+        "@nestjs/schematics": {
+          "module": {
+            "flat": false
+          }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
