@@ -80,8 +80,7 @@ export class DataService {
    */
   private getNewWebSocket(options?: any): WebSocketSubject<any> {
     // Support TLS-specific URLs, when appropriate.
-    const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-    let url = protocol + window.location.hostname + ':' + WS_PORT;
+    let url = window.location.origin.replace(/^http/, 'ws');
     if (options.queryParams) url = `${url}?${options.queryParams}`;
     const wsSubjectConfig: WebSocketSubjectConfig<any> = {
       url,

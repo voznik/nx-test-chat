@@ -24,7 +24,7 @@ enum WS_STATE {
   CLOSED_STATE = 3,
 }
 
-@WebSocketGateway(8081, { namespace: 'chat' })
+@WebSocketGateway()
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;

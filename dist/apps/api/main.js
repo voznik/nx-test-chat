@@ -748,7 +748,7 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", void 0)
 ], ChatGateway.prototype, "onNewUserEvent", null);
 ChatGateway = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_2__["WebSocketGateway"])(8081, { namespace: 'chat' }),
+    Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_2__["WebSocketGateway"])(),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_j = typeof _app_logger__WEBPACK_IMPORTED_MODULE_5__[/* AppLogger */ "a"] !== "undefined" && _app_logger__WEBPACK_IMPORTED_MODULE_5__[/* AppLogger */ "a"]) === "function" ? _j : Object, typeof (_k = typeof _chat_service__WEBPACK_IMPORTED_MODULE_8__[/* ChatService */ "a"] !== "undefined" && _chat_service__WEBPACK_IMPORTED_MODULE_8__[/* ChatService */ "a"]) === "function" ? _k : Object, typeof (_l = typeof _chat_users_service__WEBPACK_IMPORTED_MODULE_6__[/* ChatUsersService */ "a"] !== "undefined" && _chat_users_service__WEBPACK_IMPORTED_MODULE_6__[/* ChatUsersService */ "a"]) === "function" ? _l : Object])
 ], ChatGateway);
 
